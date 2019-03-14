@@ -22,8 +22,8 @@ hielixer = Item('MegaElixer', 'elixer', 'Fully restores party\'s HP/MP', 9999)
 
 grenade = Item('Grenade', 'attack', 'Deals 500 damage', 500)
 
-player = Person(460, 65, 60, 34, [fire, thunder, blizzard, meteor, cure, cura])
-emeny = Person(1200,65, 45, 25, [])
+player = Person(460, 65, 60, 34, [fire, thunder, blizzard, meteor, cure, cura], [])
+emeny = Person(1200,65, 45, 25, [], [])
 
 running = True
 

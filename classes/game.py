@@ -1,5 +1,6 @@
 import random
 from .magic import Spell
+from .ivventory import Item
 
 #color in terminal
 class bcolors:
@@ -13,7 +14,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 class Person:
-    def __init__(self, hp, mp, attack, defense, magic):
+    def __init__(self, hp, mp, attack, defense, magic, items):
         self.max_hp = hp
         self.hp = hp
         self.max_mp = mp
@@ -22,7 +23,8 @@ class Person:
         self.attack_hight = attack + 10
         self.defense = defense
         self.magic = magic
-        self.action = ['Attack', 'Magic']
+        self.items = items
+        self.action = ['Attack', 'Magic', 'Item']
 
     def generate_damage(self):
         return random.randrange(self.attack_low, self.attack_hight)
@@ -53,15 +55,21 @@ class Person:
             self.mp -= cost
     
     def choose_action(self):
-        index = 1
-        print('Actions:')
+        i = 1
+        print(bcolors.OKBLUE + bcolors.BOLD + 'Actions:' + bcolors.ENDC)
         for item in self.action:
-            print(str(index) + ':', item)
-            index += 1
+            print(str(i) + '.', item)
+            i += 1
     
     def choose_magic(self):
-        index = 1
-        print('Magic:')
+        i = 1
+        print(bcolors.OKBLUE + bcolors.BOLD + 'Magic:' + bcolors.ENDC)
         for spell in self.magic:
-            print(str(index) + ':', spell.name, '(cost:', spell.cost, ')')
-            index += 1
+            print(str(i) + '.', spell.name, '(cost:', spell.cost, ')' )
+            i += 1
+
+    def choose_item(self):
+        i = 1
+        print(bcolors.OKBLUE + bcolors.BOLD + 'Items:' + bcolors.ENDC)
+        for item in self.items:
+            print(str(i) + '.', item.name, ':', item.description)
