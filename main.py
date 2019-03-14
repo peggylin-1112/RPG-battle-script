@@ -22,7 +22,10 @@ hielixer = Item('MegaElixer', 'elixer', 'Fully restores party\'s HP/MP', 9999)
 
 grenade = Item('Grenade', 'attack', 'Deals 500 damage', 500)
 
-player = Person(460, 65, 60, 34, [fire, thunder, blizzard, meteor, cure, cura], [])
+player_spell = [fire, thunder, blizzard, meteor, cure, cura]
+player_items = [potion, hipotion, superpotion, elixer, hielixer, grenade]
+
+player = Person(460, 65, 60, 34, player_spell, player_items)
 emeny = Person(1200,65, 45, 25, [], [])
 
 running = True
@@ -36,14 +39,19 @@ while running:
     index = int(choice) - 1
     print('You choose ' + choice)
 
-    #choose attack
+    # choose attack
     if index == 0:
         damage = player.generate_damage()
         emeny.take_damage(damage)
         print('You attack for ' + str(damage) + ' points of damage. Emeny HP:' + str(emeny.get_hp()))
+    # choose magic
     elif index == 1:
         player.choose_magic()
         magic_choice = int(input('Choose magic:')) - 1
+
+        # back to menu
+        if magic_choice == -1:
+            continue
 
         spell = player.magic[magic_choice]
         magic_damage = spell.generate_damage()
@@ -63,7 +71,28 @@ while running:
         elif spell.type == 'black':
             emeny.take_damage(magic_damage)
             print(bcolors.OKGREEN + spell.name + 'deals ' + str(magic_damage) + ' points of damage. Emeny HP:' + str(emeny.get_hp()), bcolors.ENDC)
-    
+    # choose item
+    elif index == 2:
+        player.choose_item()
+        item_choice = int(input('Choose item:')) - 1
+
+        #back to menu
+        if item_choice == -1:
+            continue
+
+        item = player.items[item_choice]
+
+        if item.type == 'potion':
+            player.heal(item.prop)
+            print(bcolors.OKGREEN + '\n' + item.name + ' heals for', str(item.prop), 'HP' + bcolors.ENDC)
+        elif item.type == 'elixer':
+            player.hp = player.max_hp
+            player.mp = player.max_mp
+            print(bcolors.OKGREEN + '\n' + item.name + ' Fully restore HP/MP' + bcolors.ENDC)
+        elif item.type == 'attack':
+            emeny.take_damage(item.prop)
+            print(bcolors.FAIL + '\n' + item.name + ' deals', str(item.prop), 'points of damage' + bcolors.ENDC)
+
     emeny.choice = 1
     emeny_damage = emeny.generate_damage()
     player.take_damage(emeny_damage)
