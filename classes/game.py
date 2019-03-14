@@ -1,6 +1,6 @@
 import random
 from .magic import Spell
-from .ivventory import Item
+from .inventory import Item
 
 #color in terminal
 class bcolors:
@@ -58,18 +58,19 @@ class Person:
         i = 1
         print(bcolors.OKBLUE + bcolors.BOLD + 'Actions:' + bcolors.ENDC)
         for item in self.action:
-            print(str(i) + '.', item)
+            print('    ' + str(i) + '.', item)
             i += 1
     
     def choose_magic(self):
         i = 1
         print(bcolors.OKBLUE + bcolors.BOLD + 'Magic:' + bcolors.ENDC)
         for spell in self.magic:
-            print(str(i) + '.', spell.name, '(cost:', spell.cost, ')' )
+            print('    ' + str(i) + '.', spell.name, '(cost:', spell.cost, ')' )
             i += 1
 
     def choose_item(self):
         i = 1
         print(bcolors.OKBLUE + bcolors.BOLD + 'Items:' + bcolors.ENDC)
         for item in self.items:
-            print(str(i) + '.', item.name, ':', item.description)            i += 1
+            print('    ' + str(i) + '.', item.name, ':', item.description)
+            i += 1
