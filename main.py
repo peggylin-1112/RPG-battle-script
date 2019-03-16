@@ -104,8 +104,14 @@ while running:
                 player.heal(item.prop)
                 print(bcolors.OKGREEN + '\n' + item.name + ' heals for', str(item.prop), 'HP' + bcolors.ENDC)
             elif item.type == 'elixer':
-                player.hp = player.max_hp
-                player.mp = player.max_mp
+                if item.name == 'MegaElixer':
+                    for i in players:
+                        i.hp = player.max_hp
+                else:
+                    player.mp = player.max_mp
+                    player.hp = player.max_hp
+                    player.mp = player.max_mp
+                
                 print(bcolors.OKGREEN + '\n' + item.name + ' Fully restore HP/MP' + bcolors.ENDC)
             elif item.type == 'attack':
                 emeny.take_damage(item.prop)
