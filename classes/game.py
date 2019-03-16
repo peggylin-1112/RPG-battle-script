@@ -38,6 +38,8 @@ class Person:
 
     def heal(self, heal_point):
         self.hp += heal_point
+        if self.hp >= self.max_hp:
+            self.hp = self.max_hp
     
     def get_hp(self):
         return self.hp
@@ -77,6 +79,7 @@ class Person:
             i += 1
 
     def get_stat(self):
+        # hp bar (25 spaces)
         hp_bar = ''
         hp_bar_ticks = (self.hp / self.max_hp) * 100 / 4
 
@@ -87,6 +90,7 @@ class Person:
         while len(hp_bar) < 25:
             hp_bar += ' '
 
+        # mp bar (10 spaces)
         mp_bar = ''
         mp_bar_ticks = (self.mp / self.max_mp) * 100 / 10
 
@@ -95,8 +99,9 @@ class Person:
             mp_bar_ticks -= 1
 
         while len(mp_bar) < 10:
-            hp_bar += ' '
+            mp_bar += ' '
 
+        # hp number and mp member (9(hp) + 9(mp) spaces)
         hp_number = str(self.hp) + '/' + str(self.max_hp)
         mp_number = str(self.mp) + '/' + str(self.max_mp)
 
@@ -106,6 +111,7 @@ class Person:
         while len(mp_number) < 9:
             mp_number += ' '
 
+        # player name (25 space)
         if len(self.name) < 25:
             name = self.name + ':'
             while len(name) < 25:
