@@ -45,6 +45,24 @@ while running:
     for player in players:
         player.get_stat()
 
+    print('\n')
+    emeny.get_stat_text()
+    emeny.get_stat()
+
+    # decide if battle end
+    number_of_player = len(players)
+    for player in players:
+        dead_player_number = 0;
+        if player.get_hp() <= 0:
+            dead_player_number += 1
+        if dead_player_number == number_of_player:
+            running = False
+            break
+    if emeny.get_hp() <= 0:
+        print(bcolors.OKGREEN + 'You win!' + bcolors.ENDC)
+        running = False
+        break
+
     print('============================')
     for player in players:
         player.choose_action()
@@ -119,17 +137,9 @@ while running:
 
     emeny.choice = 1
     emeny_damage = emeny.generate_damage()
-    player = players[random.randrange(0,2)]
-    player.take_damage(emeny_damage)
-    print('Emeny attack', player.name, 'for', emeny_damage, 'points of damage. Player HP:', player.get_hp())
+    target = players[random.randrange(0,2)]
+    target.take_damage(emeny_damage)
+    print('Emeny attack', target.name, 'for', emeny_damage, 'points of damage. Player HP:', target.get_hp())
 
     print('============================')
-    print(bcolors.FAIL + 'Emeny HP:', str(emeny.get_hp()) + '/' + str(emeny.get_max_hp()), bcolors.ENDC, '\n')
-    
-    if player.get_hp() <= 0:
-        print(bcolors.FAIL + 'The Emeny wins!' + bcolors.ENDC)
-        running = False
-    elif emeny.get_hp() <= 0:
-        print(bcolors.OKGREEN + 'You win!' + bcolors.ENDC)
-        running = False
     
