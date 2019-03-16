@@ -75,3 +75,45 @@ class Person:
         for item in self.items:
             print('    ' + str(i) + '.', item['item'].name, ':', item['item'].description, '(x' + str(item['quantity']) + ')')
             i += 1
+
+    def get_stat(self):
+        hp_bar = ''
+        hp_bar_ticks = (self.hp / self.max_hp) * 100 / 4
+
+        while hp_bar_ticks > 0:
+            hp_bar += '█'
+            hp_bar_ticks -= 1
+
+        while len(hp_bar) < 25:
+            hp_bar += ' '
+
+        mp_bar = ''
+        mp_bar_ticks = (self.mp / self.max_mp) * 100 / 10
+
+        while mp_bar_ticks > 0:
+            mp_bar += '█'
+            mp_bar_ticks -= 1
+
+        while len(mp_bar) < 10:
+            hp_bar += ' '
+
+        hp_number = str(self.hp) + '/' + str(self.max_hp)
+        mp_number = str(self.mp) + '/' + str(self.max_mp)
+
+        while len(hp_number) < 9:
+            hp_number += ' '
+        
+        while len(mp_number) < 9:
+            mp_number += ' '
+
+        if len(self.name) < 25:
+            name = self.name + ':'
+            while len(name) < 25:
+                name += ' '
+        elif len(self.name) >= 25:
+            name = self.name[0:23] + ':'
+
+        print(name + hp_number +  '|' + bcolors.OKGREEN + hp_bar + bcolors.ENDC +'|    ' + mp_number +'|' + bcolors.OKBLUE + mp_bar + bcolors.ENDC +'|')
+
+    def get_stat_text(self):
+        print('Name                             HP_________________________             MP__________')

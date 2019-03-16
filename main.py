@@ -28,9 +28,9 @@ player_items = [{'item':potion, 'quantity': 5}, {'item':hipotion, 'quantity': 5}
                 {'item':superpotion, 'quantity': 5}, {'item':elixer, 'quantity': 5},
                 {'item':hielixer, 'quantity': 2}, {'item':grenade, 'quantity': 5}]
 
-player1 = Person('Mandy:', 460, 65, 60, 34, player_spell, player_items)
-player2 = Person('Nick:', 460, 65, 60, 34, player_spell, player_items)
-player3 = Person('Oscar:', 460, 65, 60, 34, player_spell, player_items)
+player1 = Person('Mandy', 460, 65, 60, 34, player_spell, player_items)
+player2 = Person('Nick', 460, 65, 60, 34, player_spell, player_items)
+player3 = Person('Oscar', 460, 65, 60, 34, player_spell, player_items)
 emeny = Person('Emeny:',1200,65, 45, 25, [], [])
 
 players = [player1, player2, player3]
@@ -40,9 +40,10 @@ running = True
 print(bcolors.FAIL + bcolors.BOLD + 'AN ENEMY ATTACKS!' + bcolors.ENDC)
 
 while running:
+
+    player1.get_stat_text()
     for player in players:
-        print(bcolors.OKGREEN + player.name + 'HP:', str(player.get_hp()) + '/' + str(player.get_max_hp()), bcolors.ENDC)
-        print(bcolors.OKBLUE + player.name + 'MP:', str(player.get_mp()) + '/' + str(player.get_max_mp()), bcolors.ENDC)
+        player.get_stat()
 
     print('============================')
     for player in players:
