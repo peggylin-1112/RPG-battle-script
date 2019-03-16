@@ -78,6 +78,15 @@ class Person:
             print('    ' + str(i) + '.', item['item'].name, ':', item['item'].description, '(x' + str(item['quantity']) + ')')
             i += 1
 
+    def choose_target(self, emenies):
+        i = 1
+        print(bcolors.FAIL + bcolors.BOLD + 'Items:' + bcolors.ENDC)
+        for emeny in emenies:
+            print('    '+ str(i) + '.' + emeny.name)
+            i += 1
+        choice = int(input('Choose action:')) - 1
+        return choice
+
     def get_stat(self):
         # hp bar (25 spaces)
         hp_bar = ''

@@ -31,9 +31,13 @@ player_items = [{'item':potion, 'quantity': 5}, {'item':hipotion, 'quantity': 5}
 player1 = Person('Mandy', 460, 65, 60, 34, player_spell, player_items)
 player2 = Person('Nick', 460, 65, 60, 34, player_spell, player_items)
 player3 = Person('Oscar', 460, 65, 60, 34, player_spell, player_items)
-emeny = Person('Emeny:',1200,65, 45, 25, [], [])
+
+emeny1 = Person('Bat',1200,65, 45, 25, [], [])
+emeny2 = Person('Emeny',6000,65, 45, 25, [], [])
+emeny3 = Person('Bat',1200,65, 45, 25, [], [])
 
 players = [player1, player2, player3]
+emenies = [emeny1, emeny2, emeny3]
 
 running = True
 
@@ -46,8 +50,10 @@ while running:
         player.get_stat()
 
     print('\n')
-    emeny.get_stat_text()
-    emeny.get_stat()
+
+    emeny1.get_stat_text()
+    for emeny in emenies:
+        emeny.get_stat()
 
     # decide if battle end
     number_of_player = len(players)
@@ -73,8 +79,12 @@ while running:
         # choose attack
         if index == 0:
             damage = player.generate_damage()
-            emeny.take_damage(damage)
-            print(player.name, 'attack for ' + str(damage) + ' points of damage. Emeny HP:' + str(emeny.get_hp()))
+
+            # choose target
+            choice = player.choose_target(emenies)
+            target = emenies[choice]
+            target.take_damage(damage)
+            print(player.name, 'attack for ' + str(damage) + ' points of damage. ' + target.name + ' HP:' + str(target.get_hp()))
         # choose magic
         elif index == 1:
             player.choose_magic()
@@ -97,11 +107,19 @@ while running:
             player.reduce_mp(spell.cost)
 
             if spell.type == 'white':
-                player.heal(magic_damage)
-                print(bcolors.OKBLUE + spell.name + ' heals for', str(magic_damage) + ' HP', bcolors.ENDC)
+                # choose target
+                choice = player.choose_target(players)
+                target = players[choice]
+                target.heal(magic_damage)
+
+                print(bcolors.OKBLUE + spell.name + ' heals ' + target.name + ' for', str(magic_damage) + ' HP', bcolors.ENDC)
             elif spell.type == 'black':
-                emeny.take_damage(magic_damage)
-                print(bcolors.OKGREEN + spell.name + 'deals ' + str(magic_damage) + ' points of damage. Emeny HP:' + str(emeny.get_hp()), bcolors.ENDC)
+
+                # choose target
+                choice = player.choose_target(emenies)
+                target = emenies[choice]
+                target.take_damage(magic_damage)
+                print(bcolors.OKGREEN + spell.name + 'deals ' + str(magic_damage) + ' points of damage. ' + target.name + ' HP:' + str(target.get_hp()), bcolors.ENDC)
         # choose item
         elif index == 2:
             player.choose_item()
@@ -132,14 +150,20 @@ while running:
                 
                 print(bcolors.OKGREEN + '\n' + item.name + ' Fully restore HP/MP' + bcolors.ENDC)
             elif item.type == 'attack':
-                emeny.take_damage(item.prop)
-                print(bcolors.FAIL + '\n' + item.name + ' deals', str(item.prop), 'points of damage' + bcolors.ENDC)
+                # choose target
+                choice = player.choose_target(emenies)
+                target = emenies[choice]
+                target.take_damage(item.prop)
 
-    emeny.choice = 1
-    emeny_damage = emeny.generate_damage()
-    target = players[random.randrange(0,2)]
-    target.take_damage(emeny_damage)
-    print('Emeny attack', target.name, 'for', emeny_damage, 'points of damage. Player HP:', target.get_hp())
+                print(bcolors.FAIL + '\n' + item.name + ' deals', str(item.prop), 'points of damage' + bcolors.ENDC)
+    
+    # emeny actions
+    for emeny in emenies:
+        emeny.choice = 1
+        emeny_damage = emeny.generate_damage()
+        target = players[random.randrange(0,2)]
+        target.take_damage(emeny_damage)
+        print(emeny.name + ' attack', bcolors.FAIL ,target.name, bcolors.ENDC, 'for', emeny_damage, 'points of damage. Player HP:', target.get_hp())
 
     print('============================')
     
