@@ -85,6 +85,12 @@ while running:
             target = emenies[choice]
             target.take_damage(damage)
             print(player.name, 'attack for ' + str(damage) + ' points of damage. ' + target.name + ' HP:' + str(target.get_hp()))
+
+            # remove died emeny
+            if target.get_hp() == 0:
+                del emenies[choice]
+                print(target.name + 'has died.')
+
         # choose magic
         elif index == 1:
             player.choose_magic()
@@ -120,6 +126,11 @@ while running:
                 target = emenies[choice]
                 target.take_damage(magic_damage)
                 print(bcolors.OKGREEN + spell.name + 'deals ' + str(magic_damage) + ' points of damage. ' + target.name + ' HP:' + str(target.get_hp()), bcolors.ENDC)
+
+                # remove died emeny
+                if target.get_hp() == 0:
+                    del emenies[choice]
+                    print(target.name + 'has died.')
         # choose item
         elif index == 2:
             player.choose_item()
@@ -156,6 +167,11 @@ while running:
                 target.take_damage(item.prop)
 
                 print(bcolors.FAIL + '\n' + item.name + ' deals', str(item.prop), 'points of damage' + bcolors.ENDC)
+                
+                # remove died emeny
+                if target.get_hp() == 0:
+                    del emenies[choice]
+                    print(target.name + 'has died.')
     
     # emeny actions
     for emeny in emenies:
