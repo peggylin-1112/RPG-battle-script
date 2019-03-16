@@ -78,11 +78,11 @@ class Person:
             print('    ' + str(i) + '.', item['item'].name, ':', item['item'].description, '(x' + str(item['quantity']) + ')')
             i += 1
 
-    def choose_target(self, emenies):
+    def choose_target(self, enemies):
         i = 1
         print(bcolors.FAIL + bcolors.BOLD + 'Items:' + bcolors.ENDC)
-        for emeny in emenies:
-            print('    '+ str(i) + '.' + emeny.name)
+        for enemy in enemies:
+            print('    '+ str(i) + '.' + enemy.name)
             i += 1
         choice = int(input('Choose action:')) - 1
         return choice

@@ -32,12 +32,12 @@ player1 = Person('Mandy', 460, 65, 60, 34, player_spell, player_items)
 player2 = Person('Nick', 460, 65, 60, 34, player_spell, player_items)
 player3 = Person('Oscar', 460, 65, 60, 34, player_spell, player_items)
 
-emeny1 = Person('Bat',1200,65, 45, 25, [], [])
-emeny2 = Person('Emeny',6000,65, 45, 25, [], [])
-emeny3 = Person('Bat',1200,65, 45, 25, [], [])
+enemy1 = Person('Bat',1200,65, 45, 25, [], [])
+enemy2 = Person('enemy',6000,65, 45, 25, [], [])
+enemy3 = Person('Bat',1200,65, 45, 25, [], [])
 
 players = [player1, player2, player3]
-emenies = [emeny1, emeny2, emeny3]
+enemies = [enemy1, enemy2, enemy3]
 
 running = True
 
@@ -51,9 +51,9 @@ while running:
 
     print('\n')
 
-    emeny1.get_stat_text()
-    for emeny in emenies:
-        emeny.get_stat()
+    enemy1.get_stat_text()
+    for enemy in enemies:
+        enemy.get_stat()
 
     # decide if battle end
     number_of_player = len(players)
@@ -64,7 +64,7 @@ while running:
         if dead_player_number == number_of_player:
             running = False
             break
-    if emeny.get_hp() <= 0:
+    if enemy.get_hp() <= 0:
         print(bcolors.OKGREEN + 'You win!' + bcolors.ENDC)
         running = False
         break
@@ -81,14 +81,14 @@ while running:
             damage = player.generate_damage()
 
             # choose target
-            choice = player.choose_target(emenies)
-            target = emenies[choice]
+            choice = player.choose_target(enemies)
+            target = enemies[choice]
             target.take_damage(damage)
             print(player.name, 'attack for ' + str(damage) + ' points of damage. ' + target.name + ' HP:' + str(target.get_hp()))
 
-            # remove died emeny
+            # remove died enemy
             if target.get_hp() == 0:
-                del emenies[choice]
+                del enemies[choice]
                 print(target.name + 'has died.')
 
         # choose magic
@@ -122,14 +122,14 @@ while running:
             elif spell.type == 'black':
 
                 # choose target
-                choice = player.choose_target(emenies)
-                target = emenies[choice]
+                choice = player.choose_target(enemies)
+                target = enemies[choice]
                 target.take_damage(magic_damage)
                 print(bcolors.OKGREEN + spell.name + 'deals ' + str(magic_damage) + ' points of damage. ' + target.name + ' HP:' + str(target.get_hp()), bcolors.ENDC)
 
-                # remove died emeny
+                # remove died enemy
                 if target.get_hp() == 0:
-                    del emenies[choice]
+                    del enemies[choice]
                     print(target.name + 'has died.')
         # choose item
         elif index == 2:
@@ -162,24 +162,24 @@ while running:
                 print(bcolors.OKGREEN + '\n' + item.name + ' Fully restore HP/MP' + bcolors.ENDC)
             elif item.type == 'attack':
                 # choose target
-                choice = player.choose_target(emenies)
-                target = emenies[choice]
+                choice = player.choose_target(enemies)
+                target = enemies[choice]
                 target.take_damage(item.prop)
 
                 print(bcolors.FAIL + '\n' + item.name + ' deals', str(item.prop), 'points of damage' + bcolors.ENDC)
                 
-                # remove died emeny
+                # remove died enemy
                 if target.get_hp() == 0:
-                    del emenies[choice]
+                    del enemies[choice]
                     print(target.name + 'has died.')
     
-    # emeny actions
-    for emeny in emenies:
-        emeny.choice = 1
-        emeny_damage = emeny.generate_damage()
+    # enemy actions
+    for enemy in enemies:
+        enemy.choice = 1
+        enemy_damage = enemy.generate_damage()
         target = players[random.randrange(0,2)]
-        target.take_damage(emeny_damage)
-        print(emeny.name + ' attack', bcolors.FAIL ,target.name, bcolors.ENDC, 'for', emeny_damage, 'points of damage. Player HP:', target.get_hp())
+        target.take_damage(enemy_damage)
+        print(enemy.name + ' attack', bcolors.FAIL ,target.name, bcolors.ENDC, 'for', enemy_damage, 'points of damage. Player HP:', target.get_hp())
 
     print('============================')
     
